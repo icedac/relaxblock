@@ -1,10 +1,10 @@
 let relaxBtn = document.getElementById("relaxBtn")
 let blockCurrentSiteBtn = document.getElementById("blockCurrentSiteBtn")
+let countdownDisplay = document.getElementById("countdownDisplay") // optional if we want a separate place
 
 // Interval for countdown
 let timerInterval = setInterval(updateRelaxUI, 1000)
 
-// New immediate UI update call after "START_RELAX" or "STOP_RELAX"
 function updateRelaxUI(){
   chrome.storage.local.get("relaxModeUntil", (res)=>{
     let until = res.relaxModeUntil || 0
@@ -15,8 +15,14 @@ function updateRelaxUI(){
       let mm = String(Math.floor(seconds / 60)).padStart(2, "0")
       let ss = String(seconds % 60).padStart(2, "0")
       relaxBtn.textContent = `Stop Relax Mode - ${mm}m ${ss}s left`
+      if (countdownDisplay) {
+        countdownDisplay.textContent = `${mm}:${ss}`
+      }
     } else {
       relaxBtn.textContent = "Start Relax Mode (30 min)"
+      if (countdownDisplay) {
+        countdownDisplay.textContent = ""
+      }
     }
   })
 }
@@ -26,16 +32,18 @@ relaxBtn.onclick = () => {
     let until = res.relaxModeUntil || 0
     let now = Date.now()
     if (until > now) {
-      // if active => STOP
+      // STOP
       chrome.runtime.sendMessage({type: "STOP_RELAX"}, ()=>{
-        // immediately force an update so the label changes now
-        updateRelaxUI()
+        updateRelaxUI() 
       })
     } else {
-      // if inactive => START
+      // START
       chrome.runtime.sendMessage({type: "START_RELAX", duration: 30}, ()=>{
-        // immediately set label to something like 30:00
+        // immediate UI
         relaxBtn.textContent = "Stop Relax Mode - 30m 00s left"
+        if (countdownDisplay) {
+          countdownDisplay.textContent = "30:00"
+        }
       })
     }
   })
@@ -63,7 +71,7 @@ blockCurrentSiteBtn.onclick = () => {
   })
 }
 
-// Update blockCurrentSiteBtn label for the active tab
+// Update "Block Current Domain" label
 chrome.tabs.query({active:true, currentWindow:true}, (tabs)=>{
   if(tabs && tabs.length){
     let domain = new URL(tabs[0].url).hostname.replace("www.","")

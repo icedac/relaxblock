@@ -1,5 +1,58 @@
-body {font-family:sans-serif;margin:10px;}
-h1 {margin-bottom:10px;}
-button {margin:5px 0;padding:5px 10px;}
-ul {list-style:none;padding:0;}
-li {cursor:pointer;padding:3px 0;}
+/* Global styling for the popup */
+#popupContainer {
+    width: 250px;
+    min-height: 200px;
+    background-color: #000; /* black */
+    color: #fff; /* white text */
+    font-family: "Courier New", monospace; /* mono style */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #extTitle {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    text-align: center;
+  }
+  
+  #buttonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  /* Monochrome button style */
+  .monoBtn {
+    background-color: #222;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 8px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    cursor: pointer;
+  }
+  .monoBtn:hover {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #222;
+  }
+  
+  .digital-countdown {
+    margin-top: 10px;
+    font-size: 5.0em;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Alternatively for more "digital" style, we could add extra styling:
+  .digital-countdown {
+    background-color: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  */
+  
