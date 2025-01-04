@@ -35,3 +35,8 @@ RelaxBlock is a Chrome extension that allows you to:
 2. Go to the [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole).
 3. Submit a new item, upload the zip, and fill in all required details (icons, screenshots, description, etc.).
 4. Publish and wait for the review process to complete.
+
+### Microsoft Edge Add-ons
+1. [Microsoft Edge Add-ons 등록 페이지](https://partner.microsoft.com/en-us/dashboard/microsoftedge)
+2. 비슷한 절차로 확장 프로그램 zip 압축 업로드
+3. 아이콘, 스크린샷, 설명 등록 후 제출
