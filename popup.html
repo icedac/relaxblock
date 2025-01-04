@@ -1,8 +1,16 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"></head>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
- <div id="app">
-  <button id="relaxBtn">릴랙스 모드 시작 (30분)</button>
-  <button id="stopRelaxBtn">릴랙스 모드 해제</button>
- </div>
- <script src="popup.js"></script>
-</body></html>
+  <div id="app">
+    <!-- The same button element is reused for either starting or stopping relax mode -->
+    <button id="relaxBtn">Start Relax Mode (30 min)</button>
+    <!-- Always shows the current domain to block -->
+    <button id="blockCurrentSiteBtn">Block Current Domain - unknown</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

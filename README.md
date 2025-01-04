@@ -1,27 +1,37 @@
 # RelaxBlock
-## 소개
-- 원하는 사이트를 목록에 추가해 차단
-- 30분 릴랙스 모드로 임시 해제
-- 도메인 목록 Export/Import 기능
 
-## 설치 및 테스트
-1. `npm install`
-2. `npm run test`
+## Introduction
+RelaxBlock is a Chrome extension that allows you to:
+1. **Block specific domains** so you can’t interact with them (pages are rendered in grayscale, all clicks and key events are blocked).
+2. **Enter a “Relax Mode”** for a set duration (default 30 minutes), during which all blocked domains are temporarily accessible.
+3. **Import/Export** the list of blocked domains.
+4. **Block the current domain** in one click from the extension popup.
 
-## 로컬에서 동작 확인
-1. 크롬 주소창에 `chrome://extensions` 입력
-2. 우측 상단 "개발자 모드" 켜기
-3. "압축해제된 확장 프로그램을 로드" 버튼 클릭
-4. 이 폴더(프로젝트 루트)를 선택
+## Installation
+1. Clone or download this repository.
+2. Go to `chrome://extensions` in your Chrome browser.
+3. Enable **Developer Mode** (top-right switch).
+4. Click **Load unpacked** and select this folder.  
 
-## 스토어 등록
-### Chrome Web Store
-1. [Chrome 웹 스토어 개발자 대시보드](https://chrome.google.com/webstore/devconsole) 접속
-2. 확장 프로그램 zip 압축(이 폴더 전체)
-3. 신규 아이템 등록 후 zip 파일 업로드, 스토어 정보 입력
-4. 웹 스토어의 가이드에 맞추어 아이콘, 스크린샷, 설명 작성 후 게시
+## Usage
+1. Click the extension icon to open the popup.
+2. **Start Relax Mode (30 min)**: Unblock all domains for 30 minutes.
+3. **Stop Relax Mode**: Immediately end Relax Mode.  
+4. **Block Current Domain**: Quickly add the domain of your active tab to the block list.  
 
-### Microsoft Edge Add-ons
-1. [Microsoft Edge Add-ons 등록 페이지](https://partner.microsoft.com/en-us/dashboard/microsoftedge)
-2. 비슷한 절차로 확장 프로그램 zip 압축 업로드
-3. 아이콘, 스크린샷, 설명 등록 후 제출
+## Development & Testing
+1. Install dependencies:  
+   ```bash
+   npm install
+   ```
+2. Run tests:  
+   ```bash
+   npm run test
+   ```
+3. Load the unpacked extension in Chrome to test locally.
+
+## Publishing to Chrome Web Store
+1. Zip the entire directory.
+2. Go to the [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole).
+3. Submit a new item, upload the zip, and fill in all required details (icons, screenshots, description, etc.).
+4. Publish and wait for the review process to complete.
