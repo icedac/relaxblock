@@ -1,0 +1,25 @@
+{
+    "name": "RelaxBlock",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "description": "차단 도메인을 효율적으로 관리하고, 원하는 시간 동안 잠시 해제하는 기능을 제공.",
+    "permissions": ["storage", "tabs", "activeTab", "scripting"],
+    "options_ui": {
+      "page": "options.html",
+      "open_in_tab": true
+    },
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"],
+        "run_at": "document_start"
+      }
+    ]
+   }
+   
