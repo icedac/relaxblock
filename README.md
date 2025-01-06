@@ -1,5 +1,7 @@
 # RelaxBlock
 
+- [Install for chrome/edge](https://chromewebstore.google.com/detail/relaxblock/lkpgmfihdgbpfnnfcghimmakpfcbhhhn?authuser=0&hl=ko)
+
 ## Introduction
 RelaxBlock is a Chrome extension that allows you to:
 1. **Block specific domains** so you can’t interact with them (pages are rendered in grayscale, all clicks and key events are blocked).
