@@ -1,58 +1,93 @@
-/* Global styling for the popup */
-#popupContainer {
-    width: 250px;
-    min-height: 200px;
-    background-color: #000; /* black */
-    color: #fff; /* white text */
-    font-family: "Courier New", monospace; /* mono style */
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #extTitle {
-    margin: 0;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-    text-align: center;
-  }
-  
-  #buttonContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-  
-  /* Monochrome button style */
-  .monoBtn {
-    background-color: #222;
-    color: #fff;
-    border: 1px solid #555;
-    padding: 8px;
-    font-family: "Courier New", monospace;
-    font-size: 0.9em;
-    cursor: pointer;
-  }
-  .monoBtn:hover {
-    background-color: #fff;
-    color: #000;
-    border: 1px solid #222;
-  }
-  
-  .digital-countdown {
-    margin-top: 10px;
-    font-size: 5.0em;
-    letter-spacing: 0.05em;
-  }
-  
-  /* Alternatively for more "digital" style, we could add extra styling:
-  .digital-countdown {
-    background-color: #333;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-  }
-  */
-  
+    /* 전체 팝업 컨테이너 스타일 */
+    body {
+      margin: 0;
+      padding: 0;
+      /* 모던 폰트 사용(Inter, Roboto 등). 없을 경우 기본 sans-serif로 대체 */
+      font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+      background-color: #f9fafb; /* 밝은 톤 백그라운드 */
+    }
+
+    #popupContainer {
+      width: 300px;
+      min-height: 140px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;  /* 팝업 내부 배경색 */
+      color: #111827;            /* 텍스트 컬러: 딥 그레이 */
+      border-radius: 8px;        /* 라운딩 처리로 모던 느낌 */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 가벼운 쉐도우 */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    /* 타이틀 */
+    #extTitle {
+      margin: 0;
+      margin-bottom: 16px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      text-align: center;
+      color: #1f2937;
+    }
+
+    /* 버튼 컨테이너 */
+    #buttonContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    /* 공통 버튼 스타일 */
+    .monoBtn {
+      background-color: #3b82f6;   /* 메인 버튼 컬러: 블루 계열 */
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 14px 10px 14px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+    .monoBtn:hover {
+      background-color: #2563eb;   /* hover 시 조금 더 진한 파랑 */
+    }
+    .monoBtn:active {
+      transform: scale(0.98);
+    }
+
+    /* 인라인 버튼(시간 선택 버튼들) */
+    .inline {
+      background-color: #000000;   /* 메인 버튼 컬러: 블루 계열 */
+      display: inline-block;
+      margin-top: 10px;
+      margin-right: 4px; /* 버튼 간 간격 */
+    }
+
+    /* Relax 버튼 묶음을 담는 래퍼 */
+    #relaxButtonsContainer {
+      display: none; /* 초기에는 숨김. 필요 시 코드에서 block */
+      text-align: center;
+    }
+
+    /* Stop 버튼은 같은 스타일 사용. 상황에 따라 block/none 처리 */
+    #stopRelaxBtn {
+      background-color: #ef4444; /* 빨간색 계열 */
+    }
+    #stopRelaxBtn:hover {
+      background-color: #dc2626;
+    }
+
+    /* 남은 시간 표시 (디지털 카운트다운 느낌) */
+    #countdownDisplay {
+      margin-top: 16px;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #1f2937;
+      text-align: center;
+      min-height: 50px; /* 레이아웃 흔들림 방지용 */
+    }
