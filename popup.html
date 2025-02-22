@@ -8,10 +8,26 @@
   <div id="popupContainer">
     <h1 id="extTitle">RelaxBlock</h1>
     <div id="buttonContainer">
-      <button id="relaxBtn" class="monoBtn">Start Relax Mode (30 min)</button>
+
+      <!-- (3) 현재 도메인이 차단되어 있지 않을 때만 보여줄 Block 버튼 -->
       <button id="blockCurrentSiteBtn" class="monoBtn">Block Current Domain - unknown</button>
+
+      <!-- (1),(2) 현재 도메인이 차단되어 있을 때만 보여줄 Relax Mode 버튼들 -->
+      <div id="relaxButtonsContainer">
+        <button id="relax30Btn" class="monoBtn">Start Relax Mode (30m)</button>
+        <div>
+          <button id="relax60Btn" class="monoBtn inline">60m</button>
+          <button id="relax15Btn" class="monoBtn inline">15m</button>
+          <button id="relax10Btn" class="monoBtn inline">10m</button>
+          <button id="relax5Btn" class="monoBtn inline">5m</button>
+        </div>
+      </div>
+
+      <!-- Relax Mode가 동작 중일 때 중단할 수 있는 Stop 버튼 (선택 사항) -->
+      <button id="stopRelaxBtn" class="monoBtn" style="display:none;">Stop Relax Mode</button>
     </div>
-    <!-- If we want a separate space for the countdown, could do: -->
+
+    <!-- 남은 시간 표시용 -->
     <div id="countdownDisplay" class="digital-countdown"></div>
   </div>
   <script src="popup.js"></script>
