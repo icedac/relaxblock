@@ -1,6 +1,6 @@
 {
     "name": "RelaxBlock",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "manifest_version": 3,
     "description": "차단 도메인을 효율적으로 관리하고, 원하는 시간 동안 잠시 해제하는 기능을 제공.",
     "permissions": [
