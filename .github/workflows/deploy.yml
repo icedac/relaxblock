@@ -1,0 +1,121 @@
+name: Deploy to Stores
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: npm test
+      
+      - name: Build extension
+        run: npm run build
+      
+      - name: Get current version
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./manifest.json').version")
+          echo "current_version=$VERSION" >> $GITHUB_OUTPUT
+      
+      - name: Bump version
+        id: bump_version
+        run: |
+          # Bump patch version
+          npm version patch --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          # Update manifest.json with new version
+          node -e "
+            const fs = require('fs');
+            const manifest = JSON.parse(fs.readFileSync('manifest.json'));
+            manifest.version = '$NEW_VERSION';
+            fs.writeFileSync('manifest.json', JSON.stringify(manifest, null, 2));
+          "
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+      
+      - name: Create release zip
+        run: |
+          mkdir -p build
+          zip -r build/relaxblock.zip . \
+            -x "*.git*" \
+            -x "node_modules/*" \
+            -x "test/*" \
+            -x ".github/*" \
+            -x "*.md" \
+            -x "package*.json" \
+            -x ".eslintrc.js" \
+            -x "jest.*.js" \
+            -x "build/*" \
+            -x ".DS_Store"
+      
+      - name: Deploy to Chrome Web Store
+        if: ${{ secrets.CHROME_EXTENSION_ID != '' }}
+        uses: trmcnvn/chrome-addon@v2
+        with:
+          extension: ${{ secrets.CHROME_EXTENSION_ID }}
+          zip: build/relaxblock.zip
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+      
+      - name: Deploy to Edge Add-ons
+        if: ${{ secrets.EDGE_PRODUCT_ID != '' }}
+        uses: wdzeng/edge-addon@v1
+        with:
+          product-id: ${{ secrets.EDGE_PRODUCT_ID }}
+          zip-path: build/relaxblock.zip
+          client-id: ${{ secrets.EDGE_CLIENT_ID }}
+          client-secret: ${{ secrets.EDGE_CLIENT_SECRET }}
+          access-token-url: ${{ secrets.EDGE_ACCESS_TOKEN_URL }}
+      
+      - name: Commit version bump
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add manifest.json package.json
+          git commit -m "chore: bump version to ${{ steps.bump_version.outputs.new_version }}"
+          git push
+      
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.bump_version.outputs.new_version }}
+          release_name: Release v${{ steps.bump_version.outputs.new_version }}
+          body: |
+            ## Changes in this release
+            - Automated deployment to Chrome Web Store and Edge Add-ons
+            
+            Version bumped from ${{ steps.get_version.outputs.current_version }} to ${{ steps.bump_version.outputs.new_version }}
+          draft: false
+          prerelease: false
+      
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/relaxblock.zip
+          asset_name: relaxblock-v${{ steps.bump_version.outputs.new_version }}.zip
+          asset_content_type: application/zip
