@@ -99,7 +99,7 @@ jobs:
           node -e "JSON.parse(require('fs').readFileSync('manifest.json'))"
       
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: relaxblock-extension
           path: |
