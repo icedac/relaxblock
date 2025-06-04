@@ -12,8 +12,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-      - run: npm install --no-audit --no-fund
+      - run: npm config set registry https://registry.npmjs.org/
+      - run: npm install --legacy-peer-deps
         timeout-minutes: 5
       - run: npm run lint
 
@@ -24,8 +24,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-      - run: npm install --no-audit --no-fund
+      - run: npm config set registry https://registry.npmjs.org/
+      - run: npm install --legacy-peer-deps
         timeout-minutes: 5
       - run: npm test -- --coverage
       - uses: codecov/codecov-action@v4
@@ -39,8 +39,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-      - run: npm install --no-audit --no-fund
+      - run: npm config set registry https://registry.npmjs.org/
+      - run: npm install --legacy-peer-deps
         timeout-minutes: 5
       - run: npm run test:e2e
 
@@ -52,8 +52,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-      - run: npm install --no-audit --no-fund
+      - run: npm config set registry https://registry.npmjs.org/
+      - run: npm install --legacy-peer-deps
         timeout-minutes: 5
       - run: npm run build
       - uses: actions/upload-artifact@v4
