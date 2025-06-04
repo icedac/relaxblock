@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
 
+env:
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+  PUPPETEER_SKIP_DOWNLOAD: true
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -12,8 +16,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: echo "Temporarily skipping npm install to test workflow"
-      - run: echo "npm run lint would run here"
+      - run: npm ci --no-audit
+      - run: npm run lint
 
   test:
     runs-on: ubuntu-latest
@@ -22,8 +26,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: echo "Temporarily skipping npm install to test workflow"
-      - run: echo "npm test would run here"
+      - run: npm ci --no-audit
+      - run: npm test -- --coverage
+      - uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   e2e:
     runs-on: ubuntu-latest
@@ -32,8 +39,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: echo "Temporarily skipping npm install to test workflow"
-      - run: echo "npm run test:e2e would run here"
+      - run: npm ci --no-audit
+      - run: npm run test:e2e
 
   build:
     runs-on: ubuntu-latest
@@ -43,9 +50,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: echo "Temporarily skipping npm install to test workflow"
-      - run: echo "npm run build would run here"
-      - run: mkdir -p build && echo "test" > build/test.txt
+      - run: npm ci --no-audit
+      - run: npm run build
       - uses: actions/upload-artifact@v4
         with:
           name: extension-build
