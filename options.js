@@ -79,7 +79,7 @@ importFile.onchange = (e) => {
         saveBlocked(imported);
       }
     } catch (err) {
-      console.error('Invalid JSON file for import.', err);
+      alert('Invalid JSON file. Please check the file format.');
     }
   };
   reader.readAsText(file);

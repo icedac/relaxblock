@@ -25,5 +25,13 @@ module.exports = {
   },
   globals: {
     chrome: 'readonly'
-  }
+  },
+  overrides: [
+    {
+      files: ['scripts/**/*.js'],
+      rules: {
+        'no-console': 'off'
+      }
+    }
+  ]
 };
