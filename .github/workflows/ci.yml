@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci --no-audit --no-fund --verbose
+      - run: npm install --no-audit --no-fund
         timeout-minutes: 5
       - run: npm run lint
 
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci --no-audit --no-fund --verbose
+      - run: npm install --no-audit --no-fund
         timeout-minutes: 5
       - run: npm test -- --coverage
       - uses: codecov/codecov-action@v4
@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci --no-audit --no-fund --verbose
+      - run: npm install --no-audit --no-fund
         timeout-minutes: 5
       - run: npm run test:e2e
 
@@ -53,7 +53,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci --no-audit --no-fund --verbose
+      - run: npm install --no-audit --no-fund
         timeout-minutes: 5
       - run: npm run build
       - uses: actions/upload-artifact@v4
