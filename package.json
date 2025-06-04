@@ -7,7 +7,7 @@
     "test:e2e": "jest --config=jest.e2e.config.js",
     "lint": "eslint . --ext .js",
     "lint:fix": "eslint . --ext .js --fix",
-    "build": "npm run lint && npm test && npm run package",
+    "build": "npm run lint && npm test -- --testPathIgnorePatterns=\"test/e2e\" && npm run package",
     "package": "node scripts/build.js",
     "coverage": "jest --coverage"
   },
