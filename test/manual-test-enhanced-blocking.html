@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enhanced Blocking Manual Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .high-z-index {
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      z-index: 999999;
+      background: red;
+      color: white;
+      padding: 10px;
+    }
+    video, audio {
+      margin: 10px 0;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Enhanced Blocking Test Page</h1>
+  
+  <div class="test-section">
+    <h2>1. Viewport Coverage Test</h2>
+    <p>The blocking overlay should cover this entire section.</p>
+    <button onclick="alert('This should not work when blocked')">Click Me</button>
+    <div class="high-z-index">High Z-Index Element (should be covered)</div>
+  </div>
+
+  <div class="test-section">
+    <h2>2. Media Test</h2>
+    <video controls width="400">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    
+    <audio controls>
+      <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    
+    <button onclick="playMedia()">Play All Media</button>
+  </div>
+
+  <div class="test-section">
+    <h2>3. Dynamic Content Test</h2>
+    <button onclick="addDynamicVideo()">Add Dynamic Video</button>
+    <div id="dynamic-content"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>4. iframe Test</h2>
+    <iframe src="https://www.example.com" title="Test iframe"></iframe>
+  </div>
+
+  <div class="test-section">
+    <h2>5. Timer Test</h2>
+    <p>Instructions:</p>
+    <ol>
+      <li>Add this domain to blocked list</li>
+      <li>Start relax mode for 1 minute</li>
+      <li>Play a video</li>
+      <li>Wait for timer to expire</li>
+      <li>Verify notification appears and blocking resumes</li>
+    </ol>
+  </div>
+
+  <script>
+    function playMedia() {
+      document.querySelectorAll('video, audio').forEach(media => {
+        media.play();
+      });
+    }
+
+    function addDynamicVideo() {
+      const container = document.getElementById('dynamic-content');
+      const video = document.createElement('video');
+      video.controls = true;
+      video.width = 300;
+      video.innerHTML = '<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">';
+      container.appendChild(video);
+      
+      // Auto-play the new video
+      setTimeout(() => video.play(), 100);
+    }
+
+    // Test high z-index elements
+    setInterval(() => {
+      const elem = document.querySelector('.high-z-index');
+      if (elem) {
+        elem.style.backgroundColor = elem.style.backgroundColor === 'red' ? 'blue' : 'red';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
