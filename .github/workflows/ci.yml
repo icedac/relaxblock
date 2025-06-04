@@ -28,7 +28,7 @@ jobs:
           node-version: '20'
       - run: npm ci --no-audit
       - run: npm test -- --coverage --testPathIgnorePatterns="test/e2e"
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
