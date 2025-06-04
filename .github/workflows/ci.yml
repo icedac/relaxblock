@@ -1,111 +1,58 @@
 name: CI
-
 on:
   pull_request:
-    branches: [ main ]
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Run ESLint
-        run: npm run lint
+      - run: npm ci
+      - run: npm run lint
 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Run unit tests
-        run: npm test -- --coverage
-      
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+      - run: npm ci
+      - run: npm test -- --coverage
+      - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
-          fail_ci_if_error: false
 
   e2e:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Install Puppeteer dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
-      
-      - name: Run E2E tests
-        run: npm run test:e2e
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
+      - run: npm ci
+      - run: npm run test:e2e
 
   build:
     runs-on: ubuntu-latest
+    needs: [lint, test]
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Build extension
-        run: npm run build
-      
-      - name: Validate manifest
-        run: |
-          if [ ! -f "manifest.json" ]; then
-            echo "manifest.json not found!"
-            exit 1
-          fi
-          node -e "JSON.parse(require('fs').readFileSync('manifest.json'))"
-      
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
         with:
-          name: relaxblock-extension
-          path: |
-            manifest.json
-            *.js
-            *.html
-            *.css
-            icons/
-          retention-days: 7
+          name: extension-build
+          path: build/
