@@ -27,20 +27,28 @@ jobs:
         with:
           node-version: '20'
       - run: npm ci --no-audit
-      - run: npm test -- --coverage
+      - run: npm test -- --coverage --testPathIgnorePatterns="test/e2e"
       - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   e2e:
     runs-on: ubuntu-latest
+    env:
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: false
+      PUPPETEER_SKIP_DOWNLOAD: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
       - run: npm ci --no-audit
-      - run: npm run test:e2e
+      - run: |
+          export PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+          npm run test:e2e
 
   build:
     runs-on: ubuntu-latest
