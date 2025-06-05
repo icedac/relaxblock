@@ -50,7 +50,7 @@ jobs:
       # Deploy to Edge Add-ons (when credentials are available)
       - name: Deploy to Edge Store
         if: ${{ secrets.EDGE_PRODUCT_ID != '' }}
-        uses: wdzeng/edge-addon@v1
+        uses: wdzeng/edge-addon@v2
         with:
           product-id: ${{ secrets.EDGE_PRODUCT_ID }}
           zip-path: build/relaxblock.zip
