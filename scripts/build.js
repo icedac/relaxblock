@@ -5,7 +5,7 @@ const { execSync } = require('child_process');
 // Create build directory
 const buildDir = path.join(__dirname, '..', 'build');
 if (!fs.existsSync(buildDir)) {
-  fs.mkdirSync(buildDir);
+  fs.mkdirSync(buildDir, { recursive: true });
 }
 
 // Files and directories to include in the extension
@@ -31,7 +31,11 @@ const excludePatterns = [
   '.git',
   '.gitignore',
   '.DS_Store',
-  'coverage'
+  'coverage',
+  '.claude',
+  '.eslintignore',
+  'relaxblock.txt',
+  'docs'
 ];
 
 // Convert patterns to zip arguments
@@ -40,9 +44,16 @@ const excludeArgs = excludePatterns.map(p => `-x "${p}" -x "${p}/*"`).join(' ');
 
 // Create zip file
 const zipPath = path.join(buildDir, 'relaxblock.zip');
-const zipCommand = `zip -r "${zipPath}" . ${excludeArgs}`;
+const projectRoot = path.join(__dirname, '..');
+// Ensure build directory exists before creating zip
+if (!fs.existsSync(buildDir)) {
+  fs.mkdirSync(buildDir, { recursive: true });
+}
+const zipCommand = `cd "${projectRoot}" && zip -r "build/relaxblock.zip" . ${excludeArgs}`;
 
 console.log('Building RelaxBlock extension...');
+console.log('Build directory:', buildDir);
+console.log('Zip path:', zipPath);
 console.log('Creating zip file...');
 
 try {

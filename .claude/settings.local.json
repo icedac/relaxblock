@@ -24,7 +24,17 @@
       "Bash(gh api:*)",
       "Bash(npm cache clean:*)",
       "Bash(gh run cancel:*)",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "Bash(git remote get-url:*)",
+      "Bash(npm test:*)",
+      "Bash(npm audit:*)",
+      "Bash(npm outdated)",
+      "Bash(rg:*)",
+      "Bash(grep:*)",
+      "Bash(npm run package:*)",
+      "Bash(unzip:*)",
+      "Bash(node:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }
