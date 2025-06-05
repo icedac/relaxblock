@@ -34,7 +34,11 @@
       "Bash(npm run package:*)",
       "Bash(unzip:*)",
       "Bash(node:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(npm run test:e2e:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run coverage:*)",
+      "Bash(CI=true npm test)"
     ],
     "deny": []
   }
