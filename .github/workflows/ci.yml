@@ -53,7 +53,7 @@ jobs:
           node-version: '20'
       - run: npm ci --no-audit
       - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: extension-build
           path: build/
